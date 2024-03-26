@@ -4,8 +4,8 @@ public class Employee {
     private int department;
     private final String name;
     private int salary;
-    static int count = 1;
-    int id;
+    private static int count = 1;
+    private int id;
 
     public Employee(int department, String name, int salary) {
         this.department = department;

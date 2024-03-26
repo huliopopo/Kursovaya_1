@@ -92,17 +92,7 @@ public class Main {
 
     public static Employee findMinSalaryEmployeeByDepartment(int department) {
         Employee minSalaryEmployeeByDepartment = employees[0];
-        int minSum = 0;
-        for (int i = 0; i < employees.length; i++) {
-            if (employees[i].getDepartment() == department) {
-                minSum = employees[i].getSalary();
-                minSalaryEmployeeByDepartment = employees[i];
-                break;
-            }
-        }
-        //не могу придумать как без верхнего цикла записать в переменную minSum начальную минимальную зарплату по департаменту
-        //с которой делать сравнение; разве что записать в minSum максимально возможное значение для этой переменной
-
+        int minSum = Integer.MAX_VALUE;
         for (int i = 0; i < employees.length; i++) {
             if (employees[i].getDepartment() == department && employees[i].getSalary() < minSum) {
                 minSum = employees[i].getSalary();
@@ -143,7 +133,12 @@ public class Main {
                 numberOfEmployeesInDep++;
             }
         }
-        return sum / numberOfEmployeesInDep;
+        if (numberOfEmployeesInDep != 0) {
+            return sum / numberOfEmployeesInDep;
+        } else {
+            return 0;
+        }
+
     }
 
     public static void indexAllSalaryInDep(int department, double k) {
