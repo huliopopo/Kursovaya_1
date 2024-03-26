@@ -18,6 +18,19 @@ public class Main {
         System.out.println("findMaxSalaryEmployee() = " + findMaxSalaryEmployee());
         System.out.println("averageSalary() = " + averageSalary());
         printAllEmployeesNames();
+        raiseAllSalary(1.10);
+        printAllEmployees();
+        int dep = 5; // Номер отдела по которому будет осуществлятся поиск
+        System.out.println("Сотрудник с минимальной ЗП в отделе " + dep + ":\n" + findMinSalaryEmployeeByDepartment(dep));
+        System.out.println("Сотрудник с максимальной ЗП в отделе " + dep + ":\n" + findMaxSalaryEmployeeByDepartment(dep));
+        System.out.println("salaryPerMonthByDepartment(dep) = " + salaryPerMonthByDepartment(dep));
+        System.out.println("averageSalaryByDepartment(dep) = " + averageSalaryByDepartment(dep));
+        indexAllSalaryInDep(dep, 1.10);
+        printAllEmployeesInDepWithoutDep(dep);
+        int number = 40000;
+        printAllEmployeesWithLowerSalaries(number);
+        printAllEmployeesWithHigherOrEqualSalaries(number);
+
     }
 
     public static void printAllEmployees() {
@@ -68,6 +81,101 @@ public class Main {
             System.out.println(employees[i].getName());
         }
     }
+
+    public static void raiseAllSalary(double k) {
+        for (int i = 0; i < employees.length; i++) {
+            int salary;
+            salary = (int) (employees[i].getSalary() * k);
+            employees[i].setSalary(salary);
+        }
+    }
+
+    public static Employee findMinSalaryEmployeeByDepartment(int department) {
+        Employee minSalaryEmployeeByDepartment = employees[0];
+        int minSum = Integer.MAX_VALUE;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department && employees[i].getSalary() < minSum) {
+                minSum = employees[i].getSalary();
+                minSalaryEmployeeByDepartment = employees[i];
+            }
+        }
+        return minSalaryEmployeeByDepartment;
+    }
+
+    public static Employee findMaxSalaryEmployeeByDepartment(int department) {
+        int maxSum = 0;
+        Employee maxSalaryEmployeeByDepartment = employees[0];
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department && employees[i].getSalary() > maxSum) {
+                maxSum = employees[i].getSalary();
+                maxSalaryEmployeeByDepartment = employees[i];
+            }
+        }
+        return maxSalaryEmployeeByDepartment;
+    }
+
+    public static int salaryPerMonthByDepartment(int department) {
+        int sum = 0;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department) {
+                sum += employees[i].getSalary();
+            }
+        }
+        return sum;
+    }
+
+    public static int averageSalaryByDepartment(int department) {
+        int sum = 0;
+        int numberOfEmployeesInDep = 0;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department) {
+                sum += employees[i].getSalary();
+                numberOfEmployeesInDep++;
+            }
+        }
+        if (numberOfEmployeesInDep != 0) {
+            return sum / numberOfEmployeesInDep;
+        } else {
+            return 0;
+        }
+
+    }
+
+    public static void indexAllSalaryInDep(int department, double k) {
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department) {
+                int salary;
+                salary = (int) (employees[i].getSalary() * k);
+                employees[i].setSalary(salary);
+            }
+        }
+    }
+
+    public static void printAllEmployeesInDepWithoutDep(int department) {
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department) {
+                System.out.println("ФИО: " + employees[i].getName() + " ЗП:" + employees[i].getSalary());
+//                Есть ли иной способ вывода всех полей объекта кроме одного? Чтобы не приходилось все поля перечислять
+            }
+        }
+    }
+    public static void printAllEmployeesWithLowerSalaries(int number) {
+        System.out.println("Список сотрудников с ЗП меньше числа:");
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getSalary() < number) {
+                System.out.println(employees[i]);
+            }
+        }
+    }
+        public static void printAllEmployeesWithHigherOrEqualSalaries(int number) {
+            System.out.println("Список сотрудников с ЗП больше числа:");
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getSalary() >= number) {
+                System.out.println(employees[i]);
+            }
+        }
+    }
+
 
 }
 
